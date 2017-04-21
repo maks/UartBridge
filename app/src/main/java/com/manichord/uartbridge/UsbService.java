@@ -12,7 +12,6 @@ import android.hardware.usb.UsbManager;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.felhr.usbserial.CDCSerialDevice;
 import com.felhr.usbserial.UsbSerialDevice;
@@ -21,6 +20,8 @@ import com.felhr.usbserial.UsbSerialInterface;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+
+import timber.log.Timber;
 
 
 /**
@@ -45,8 +46,6 @@ public class UsbService extends Service {
     private static final int BAUD_RATE = 9600; // BaudRate. Change this value if you need
     public static boolean SERVICE_CONNECTED = false;
 
-    // LeGPSBip USB is:  16d0:0ba9 MCS
-
     private IBinder binder = new UsbBinder();
 
     private Context context;
@@ -67,11 +66,11 @@ public class UsbService extends Service {
         public void onReceivedData(byte[] arg0) {
             try {
                 String data = new String(arg0, "UTF-8");
-                Log.i("DATA:", data);
+                Timber.d("DATA: %s", data);
                 if (mHandler != null)
                     mHandler.obtainMessage(MESSAGE_FROM_SERIAL_PORT, data).sendToTarget();
             } catch (UnsupportedEncodingException e) {
-                Log.e("MAKS", "", e);
+                Timber.e(e, "");
             }
         }
     };
@@ -218,7 +217,6 @@ public class UsbService extends Service {
     private class ConnectionThread extends Thread {
         @Override
         public void run() {
-            Log.d("MAKS", "IS CDC:"+UsbSerialDevice.isCdcDevice(device));
             serialPort = UsbSerialDevice.createUsbSerialDevice(device, connection);
             if (serialPort != null) {
                 if (serialPort.open()) {

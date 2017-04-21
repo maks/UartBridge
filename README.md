@@ -5,7 +5,7 @@
 The point of this app is to bridge Uart data read from a Uart (serial port) device connected to
 an Android devices USB port through to a network socket.
 
-The initial primary usa-case is to allow a Vario/GPS instrument to be used by XCSoar/Tophat on 
+The initial primary use-case is to allow a Vario/GPS instrument to be used by XCSoar/Tophat on 
 Android devices where XCSoar/Tophat do not support using Androids USB Host APIs to read from 
 usb-attached varios that provide NMEA sentences via a serial (UART) connection over USB. But
 XCSoar/Tophat do have the functionality to read the data from a TCP network port.
