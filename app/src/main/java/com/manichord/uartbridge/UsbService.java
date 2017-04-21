@@ -56,6 +56,8 @@ public class UsbService extends Service {
     private UsbSerialDevice serialPort;
 
     private boolean serialPortConnected;
+    private SocketServer mSocketServer;
+
     /*
      *  Data received from serial port will be received here. Just populate onReceivedData with your code
      *  In this particular example. byte stream is converted to String and send to UI thread to
@@ -67,8 +69,10 @@ public class UsbService extends Service {
             try {
                 String data = new String(arg0, "UTF-8");
                 Timber.d("DATA: %s", data);
-                if (mHandler != null)
+                if (mHandler != null) {
                     mHandler.obtainMessage(MESSAGE_FROM_SERIAL_PORT, data).sendToTarget();
+                }
+                mSocketServer.sendData(data);
             } catch (UnsupportedEncodingException e) {
                 Timber.e(e, "");
             }
@@ -108,6 +112,7 @@ public class UsbService extends Service {
         }
     };
 
+
     /*
      * onCreate will be executed when service is started. It configures an IntentFilter to listen for
      * incoming Intents (USB ATTACHED, USB DETACHED...) and it tries to open a serial port.
@@ -120,12 +125,9 @@ public class UsbService extends Service {
         setFilter();
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         findSerialPortDevice();
+        mSocketServer = new SocketServer();
     }
 
-    /* MUST READ about services
-     * http://developer.android.com/guide/components/services.html
-     * http://developer.android.com/guide/components/bound-services.html
-     */
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
@@ -140,14 +142,19 @@ public class UsbService extends Service {
     public void onDestroy() {
         super.onDestroy();
         UsbService.SERVICE_CONNECTED = false;
+        mSocketServer.stopServer();
     }
 
     /*
-     * This function will be called from MainActivity to write data through Serial Port
+     * Write data through Serial Port
      */
     public void write(byte[] data) {
         if (serialPort != null)
             serialPort.write(data);
+
+        // write to socket as well, useful for debugging
+        mSocketServer.sendData(new String(data));
+
     }
 
     public void setHandler(Handler mHandler) {
