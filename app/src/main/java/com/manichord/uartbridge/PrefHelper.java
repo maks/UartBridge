@@ -14,8 +14,6 @@ public class PrefHelper {
     private static final String DEFAULT_STRING = "";
     private static final boolean DEFAULT_BOOLEAN = false;
 
-    private static final int DEFAULT_SERVER_PORT = 4353;
-
     private SharedPreferences mPrefs;
     private Context mContext;
 
@@ -30,12 +28,7 @@ public class PrefHelper {
     }
 
     public int getNetworkPort() {
-        int port = getInt(mContext.getString(R.string.network_port_preference));
-        if (port == DEFAULT_INT) {
-            port = DEFAULT_SERVER_PORT;
-            edit(mContext.getString(R.string.network_port_preference), port);
-        }
-        return port;
+        return getInt(mContext.getString(R.string.network_port_preference));
     }
 
     private void edit(String name, String value) {
