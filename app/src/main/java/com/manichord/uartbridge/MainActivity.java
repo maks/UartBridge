@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,8 @@ public class MainActivity extends Activity {
     private TextView display;
     private EditText editText;
     private MyHandler mHandler;
+    private boolean mMonitorEnabled;
+
     private final ServiceConnection usbConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName arg0, IBinder arg1) {
@@ -68,6 +71,7 @@ public class MainActivity extends Activity {
             usbService = null;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +121,8 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    public void enableMonitor(View v) {
-
+    public void toggleMonitor(View v) {
+        mMonitorEnabled = ((CheckBox)v).isChecked();
     }
 
     private void startService(Class<?> service, ServiceConnection serviceConnection, Bundle extras) {
@@ -147,10 +151,17 @@ public class MainActivity extends Activity {
         registerReceiver(mUsbReceiver, filter);
     }
 
+    private void showInMonitor(String data) {
+        if (mMonitorEnabled) {
+            display.append(data);
+        }
+    }
+
     /*
      * This handler will be passed to UsbService. Data received from serial port is displayed through this handler
      */
     private static class MyHandler extends Handler {
+        // so we don't leak the Activity as Service holding this handler stays around after activity leaves foreground
         private final WeakReference<MainActivity> mActivity;
 
         public MyHandler(MainActivity activity) {
@@ -162,7 +173,10 @@ public class MainActivity extends Activity {
             switch (msg.what) {
                 case UsbService.MESSAGE_FROM_SERIAL_PORT:
                     String data = (String) msg.obj;
-                    mActivity.get().display.append(data);
+                    MainActivity activity = mActivity.get();
+                    if (activity != null) {
+                        activity.showInMonitor(data);
+                    }
                     break;
             }
         }
