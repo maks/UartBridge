@@ -2,6 +2,7 @@ package com.manichord.uartbridge;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 
 /**
@@ -25,6 +26,14 @@ public class PrefHelper {
     private PrefHelper(Context context) {
         mContext = context;
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public void registerListener(SharedPreferences.OnSharedPreferenceChangeListener  listener) {
+        mPrefs.registerOnSharedPreferenceChangeListener(listener);
+    }
+
+    public void unRegisterListener(SharedPreferences.OnSharedPreferenceChangeListener  listener) {
+        mPrefs.unregisterOnSharedPreferenceChangeListener(listener);
     }
 
     public int getNetworkPort() {

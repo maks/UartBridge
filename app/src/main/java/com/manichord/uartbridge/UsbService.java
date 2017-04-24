@@ -219,6 +219,10 @@ public class UsbService extends Service {
         usbManager.requestPermission(device, mPendingIntent);
     }
 
+    public static Intent getIntent(Context context) {
+        return new Intent(context, UsbService.class);
+    }
+
     public class UsbBinder extends Binder {
         public UsbService getService() {
             return UsbService.this;

@@ -117,7 +117,6 @@ public class MainActivity extends Activity {
     }
 
     public void showSettings(View v) {
-        Timber.d("show settings");
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
@@ -137,7 +136,7 @@ public class MainActivity extends Activity {
             }
             startService(startService);
         }
-        Intent bindingIntent = new Intent(this, service);
+        Intent bindingIntent = UsbService.getIntent(MainActivity.this);
         bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 

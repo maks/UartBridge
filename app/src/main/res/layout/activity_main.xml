@@ -22,7 +22,6 @@
         android:text="@string/action_settings"
         android:onClick="showSettings"
         />
-    <requestFocus/>
 
     <TextView
         android:id="@+id/outputMonitor"
