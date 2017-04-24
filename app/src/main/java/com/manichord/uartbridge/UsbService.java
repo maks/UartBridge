@@ -43,7 +43,6 @@ public class UsbService extends Service {
     public static final String ACTION_USB_DEVICE_NOT_WORKING = "com.felhr.connectivityservices.ACTION_USB_DEVICE_NOT_WORKING";
     public static final int MESSAGE_FROM_SERIAL_PORT = 0;
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
-    private static final int BAUD_RATE = 9600; // BaudRate. Change this value if you need
     public static boolean SERVICE_CONNECTED = false;
 
     private IBinder binder = new UsbBinder();
@@ -54,7 +53,7 @@ public class UsbService extends Service {
     private UsbDevice device;
     private UsbDeviceConnection connection;
     private UsbSerialDevice serialPort;
-
+    private PrefHelper mPrefs;
     private boolean serialPortConnected;
     private SocketServer mSocketServer;
 
@@ -112,7 +111,6 @@ public class UsbService extends Service {
         }
     };
 
-
     /*
      * onCreate will be executed when service is started. It configures an IntentFilter to listen for
      * incoming Intents (USB ATTACHED, USB DETACHED...) and it tries to open a serial port.
@@ -122,12 +120,12 @@ public class UsbService extends Service {
         this.context = this;
         serialPortConnected = false;
         UsbService.SERVICE_CONNECTED = true;
-        setFilter();
+        registerReceiver(usbReceiver, getFilter());
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         findSerialPortDevice();
 
-        PrefHelper prefs = (PrefHelper) getApplicationContext().getSystemService(PrefHelper.class.getName());
-        mSocketServer = new SocketServer(prefs.getNetworkPort());
+        mPrefs = (PrefHelper) getApplicationContext().getSystemService(PrefHelper.class.getName());
+        mSocketServer = new SocketServer(mPrefs.getNetworkPort());
     }
 
     @Override
@@ -145,6 +143,7 @@ public class UsbService extends Service {
         super.onDestroy();
         UsbService.SERVICE_CONNECTED = false;
         mSocketServer.stopServer();
+        unregisterReceiver(usbReceiver);
     }
 
     /*
@@ -203,12 +202,12 @@ public class UsbService extends Service {
         }
     }
 
-    private void setFilter() {
+    private IntentFilter getFilter() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_USB_PERMISSION);
         filter.addAction(ACTION_USB_DETACHED);
         filter.addAction(ACTION_USB_ATTACHED);
-        registerReceiver(usbReceiver, filter);
+        return filter;
     }
 
     /*
@@ -239,7 +238,7 @@ public class UsbService extends Service {
             serialPort = UsbSerialDevice.createUsbSerialDevice(device, connection);
             if (serialPort != null) {
                 if (serialPort.open()) {
-                    serialPort.setBaudRate(BAUD_RATE);
+                    serialPort.setBaudRate(mPrefs.getUsbSpeed());
                     serialPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
                     serialPort.setStopBits(UsbSerialInterface.STOP_BITS_1);
                     serialPort.setParity(UsbSerialInterface.PARITY_NONE);

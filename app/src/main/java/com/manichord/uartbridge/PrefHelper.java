@@ -40,6 +40,10 @@ public class PrefHelper {
         return getInt(mContext.getString(R.string.network_port_preference));
     }
 
+    public int getUsbSpeed() {
+        return getInt(mContext.getString(R.string.usb_speed_preference));
+    }
+
     private void edit(String name, String value) {
         SharedPreferences.Editor editor = mPrefs.edit();
         editor.putString(name, value);
