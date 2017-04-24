@@ -163,7 +163,13 @@ public class UsbService extends Service {
 
     private void findSerialPortDevice() {
         // This snippet will try to open the first encountered usb device connected, excluding usb root hubs
-        HashMap<String, UsbDevice> usbDevices = usbManager.getDeviceList();
+        HashMap<String, UsbDevice> usbDevices = null;
+        try {
+            usbDevices = usbManager.getDeviceList();
+        } catch (Exception e) {
+            Timber.e(e, "Error opening USB");
+            return;
+        }
         if (!usbDevices.isEmpty()) {
             boolean keep = true;
             for (Map.Entry<String, UsbDevice> entry : usbDevices.entrySet()) {
