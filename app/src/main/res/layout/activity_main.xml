@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,48 +6,76 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.manichord.uartbridge.MainActivity">
 
     <TextView
-        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/serial_port"
+        android:text="@string/data_monitor_label"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/action_settings"
+        android:onClick="showSettings"
+        />
+    <requestFocus/>
+
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/outputMonitor"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
-        android:background="#FFFFFF"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/primary_text_dark"
         android:scrollbars = "vertical"
         android:gravity="bottom"
         />
 
-    <EditText
-        android:id="@+id/editText1"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/enable_monitor_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="enableMonitor"
+            />
+    </LinearLayout>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="28dp"
-        android:ems="10">
+        android:layout_marginTop="20dp"
+        android:text="@string/send_output_text"/>
 
-        <requestFocus/>
-    </EditText>
-
-    <Button
-        android:id="@+id/buttonSend"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_alignRight="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="42dp"
-        android:text="Send"/>
-</RelativeLayout>
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/outputSendText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12">
+        </EditText>
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"/>
+
+    </LinearLayout>
+
+</LinearLayout>

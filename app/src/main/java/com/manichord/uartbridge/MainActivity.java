@@ -21,6 +21,8 @@ import android.widget.Toast;
 import java.lang.ref.WeakReference;
 import java.util.Set;
 
+import timber.log.Timber;
+
 public class MainActivity extends Activity {
 
     /*
@@ -73,10 +75,10 @@ public class MainActivity extends Activity {
 
         mHandler = new MyHandler(this);
 
-        display = (TextView) findViewById(R.id.textView1);
+        display = (TextView) findViewById(R.id.outputMonitor);
         display.setMovementMethod(new ScrollingMovementMethod());
 
-        editText = (EditText) findViewById(R.id.editText1);
+        editText = (EditText) findViewById(R.id.outputSendText);
         Button sendButton = (Button) findViewById(R.id.buttonSend);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +106,15 @@ public class MainActivity extends Activity {
         super.onPause();
         unregisterReceiver(mUsbReceiver);
         unbindService(usbConnection);
+    }
+
+    public void showSettings(View v) {
+        Timber.d("show settings");
+        startActivity(new Intent(this, SettingsActivity.class));
+    }
+
+    public void enableMonitor(View v) {
+
     }
 
     private void startService(Class<?> service, ServiceConnection serviceConnection, Bundle extras) {

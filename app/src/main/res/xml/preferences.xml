@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.manichord.uartbridge.IntEditTextPreference
+            android:key="@string/network_port_preference"
+            android:title="@string/title_network_port_preference"
+            android:summary="@string/summary_network_port_preference" />
+</PreferenceScreen>

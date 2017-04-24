@@ -14,14 +14,12 @@ import timber.log.Timber;
 
 public class SocketServer {
 
-    public static final int SERVER_PORT = 4353;
-
     private AsyncServer asyncServer;
     private AsyncNetworkSocket asyncClient;
 
-    public SocketServer() {
+    public SocketServer(int serverPort) {
         asyncServer = new AsyncServer();
-        asyncServer.listen(null, SERVER_PORT, listenCallback);
+        asyncServer.listen(null, serverPort, listenCallback);
     }
 
     private ListenCallback listenCallback = new ListenCallback() {

@@ -125,7 +125,9 @@ public class UsbService extends Service {
         setFilter();
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         findSerialPortDevice();
-        mSocketServer = new SocketServer();
+
+        PrefHelper prefs = (PrefHelper) getApplicationContext().getSystemService(PrefHelper.class.getName());
+        mSocketServer = new SocketServer(prefs.getNetworkPort());
     }
 
     @Override

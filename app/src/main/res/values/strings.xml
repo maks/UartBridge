@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">UartBridge</string>
     <string name="action_settings">Settings</string>
-    <string name="serial_port">Serial Port</string>
+    <string name="data_monitor_label">Data Monitor</string>
+    <string name="enable_monitor_label">Enable Monitor Display</string>
+    <string name="send_output_text">Send To Serial Port</string>
+
+    <!-- Aka User Settings -->
+    <string name="title_network_port_preference">Network Port</string>
+    <string name="summary_network_port_preference">Network Port this app sends out serial data on</string>
+
+    <!-- Pref keys -->
+    <string translatable="false" name="network_port_preference">pref_network_port</string>
 </resources>
