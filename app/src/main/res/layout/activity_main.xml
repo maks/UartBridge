@@ -9,32 +9,57 @@
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.manichord.uartbridge.MainActivity">
+    tools:context="com.manichord.uartbridge.MainActivity"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_output_text"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+
+        <EditText
+            android:id="@+id/outputSendText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="12"></EditText>
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/data_monitor_label"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="@string/action_settings"
-        android:onClick="showSettings"
-        />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
 
     <TextView
         android:id="@+id/outputMonitor"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="34dp"
         android:background="@color/colorPrimary"
-        android:textColor="@android:color/primary_text_dark"
-        android:scrollbars = "vertical"
         android:gravity="bottom"
-        />
+        android:scrollbars="vertical"
+        android:textColor="@android:color/primary_text_dark" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,34 +74,22 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="toggleMonitor"
-            />
+            android:checked="true"
+            android:onClick="toggleMonitor" />
+
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/send_output_text"/>
-
-    <LinearLayout
+    <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="0.1" />
 
-        <EditText
-            android:id="@+id/outputSendText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="12">
-        </EditText>
-
-        <Button
-            android:id="@+id/buttonSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send"/>
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:onClick="showSettings"
+        android:text="@string/action_settings" />
 
 </LinearLayout>

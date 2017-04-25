@@ -7,6 +7,7 @@
 
     <!-- Aka User Settings -->
     <string name="title_network_port_preference">Port</string>
+    <string name="title_usb_speed_preference">Baud Rate</string>
     <string name="summary_network_port_preference">Network Port this app sends out serial data on</string>
     <string name="pref_category_usb_title">USB UART</string>
     <string name="pref_category_network_title">Network</string>
@@ -18,5 +19,5 @@
     <string translatable="false" name="pref_category_network_key">network_category_key</string>
     <string translatable="false" name="usb_speed_preference">pref_usb_speed</string>
     <string translatable="false" name="port_default">4353</string>
-    <string translatable="false" name="usb_speed_default">9600</string>
+    <string translatable="false" name="usb_speed_default">115200</string>
 </resources>

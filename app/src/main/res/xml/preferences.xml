@@ -20,7 +20,7 @@
 
         <com.manichord.uartbridge.IntEditTextPreference
             android:key="@string/usb_speed_preference"
-            android:title="@string/title_network_port_preference"
+            android:title="@string/title_usb_speed_preference"
             android:defaultValue="@string/usb_speed_default"
             android:summary="@string/summary_usb_speed_preference" />
 

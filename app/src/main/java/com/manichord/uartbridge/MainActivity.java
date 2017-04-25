@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
     private TextView display;
     private EditText editText;
     private MyHandler mHandler;
-    private boolean mMonitorEnabled;
+    private boolean mMonitorEnabled = true;
 
     private final ServiceConnection usbConnection = new ServiceConnection() {
         @Override
@@ -151,6 +151,9 @@ public class MainActivity extends Activity {
     }
 
     private void showInMonitor(String data) {
+        if(display.getText().length() > 1000){//todo make this a much better wrap around
+            display.setText("");
+        }
         if (mMonitorEnabled) {
             display.append(data);
         }
