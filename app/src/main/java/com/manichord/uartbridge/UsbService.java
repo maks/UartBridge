@@ -112,8 +112,7 @@ public class UsbService extends Service {
     };
 
     /*
-     * onCreate will be executed when service is started. It configures an IntentFilter to listen for
-     * incoming Intents (USB ATTACHED, USB DETACHED...) and it tries to open a serial port.
+     * Register for USB related broadcasts (USB ATTACHED, USB DETACHED...) and try to open USB port.
      */
     @Override
     public void onCreate() {
@@ -135,7 +134,7 @@ public class UsbService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return Service.START_NOT_STICKY;
+        return Service.START_STICKY;
     }
 
     @Override
