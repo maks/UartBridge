@@ -20,4 +20,5 @@
     <string translatable="false" name="usb_speed_preference">pref_usb_speed</string>
     <string translatable="false" name="port_default">4353</string>
     <string translatable="false" name="usb_speed_default">115200</string>
+    <string name="notification_message">Running</string>
 </resources>
