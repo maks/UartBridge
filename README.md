@@ -10,7 +10,16 @@ devices as XCSoar/Tophat do not support using the Android USB Host API to read f
 varios that provide NMEA sentences output via a serial connection over USB. But XCSoar/Tophat do 
 have the functionality to read the data from a TCP network port.
 
-Available on Google Play: <a href='https://play.google.com/store/apps/details?id=com.manichord.uartbridge&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
+## Devices
+
+Known to work with:
+
+* [Stodeus LeGPSBip](www.lebipbip.com/en/legpsbip-solar-vocal-gps-alti-vario)
+* [Bluefly USB](http://blueflyvario.blogspot.com.au/2016/08/new-bluefly-usb-models-released.html)
+
+
+Available on Google Play: <a href='https://play.google.com/store/apps/details?id=com.manichord.uartbridge&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img height="80" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
 
 ## Credits
