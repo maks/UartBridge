@@ -1,5 +1,7 @@
 package com.manichord.uartbridge;
 
+import android.app.Activity;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -31,6 +33,9 @@ import timber.log.Timber;
 
 public class UsbService extends Service {
 
+    private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+    private static final int ONGOING_NOTIFICATION_ID = UsbService.class.hashCode();
+
     public static final String ACTION_USB_READY = "com.felhr.connectivityservices.USB_READY";
     public static final String ACTION_USB_ATTACHED = "android.hardware.usb.action.USB_DEVICE_ATTACHED";
     public static final String ACTION_USB_DETACHED = "android.hardware.usb.action.USB_DEVICE_DETACHED";
@@ -42,7 +47,6 @@ public class UsbService extends Service {
     public static final String ACTION_CDC_DRIVER_NOT_WORKING = "com.felhr.connectivityservices.ACTION_CDC_DRIVER_NOT_WORKING";
     public static final String ACTION_USB_DEVICE_NOT_WORKING = "com.felhr.connectivityservices.ACTION_USB_DEVICE_NOT_WORKING";
     public static final int MESSAGE_FROM_SERIAL_PORT = 0;
-    private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
     public static boolean SERVICE_CONNECTED = false;
 
     private IBinder binder = new UsbBinder();
@@ -111,9 +115,19 @@ public class UsbService extends Service {
         }
     };
 
+
+    /**
+     * Intent to be used to start this service
+     *
+     * @param context
+     * @return
+     */
+    public static Intent getIntent(Context context) {
+        return new Intent(context, UsbService.class);
+    }
+
     /*
-     * onCreate will be executed when service is started. It configures an IntentFilter to listen for
-     * incoming Intents (USB ATTACHED, USB DETACHED...) and it tries to open a serial port.
+     * Register for USB related broadcasts (USB ATTACHED, USB DETACHED...) and try to open USB port.
      */
     @Override
     public void onCreate() {
@@ -126,6 +140,7 @@ public class UsbService extends Service {
 
         mPrefs = (PrefHelper) getApplicationContext().getSystemService(PrefHelper.class.getName());
         mSocketServer = new SocketServer(mPrefs.getNetworkPort());
+        makeForeground();
     }
 
     @Override
@@ -135,7 +150,7 @@ public class UsbService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return Service.START_NOT_STICKY;
+        return Service.START_STICKY;
     }
 
     @Override
@@ -218,8 +233,24 @@ public class UsbService extends Service {
         usbManager.requestPermission(device, mPendingIntent);
     }
 
-    public static Intent getIntent(Context context) {
-        return new Intent(context, UsbService.class);
+
+    /**
+     * Make this service run as "foreground service" so that OS knows its doing something
+     * important and on going for the user
+     *
+     */
+    private void makeForeground() {
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+
+        Notification notification = new Notification.Builder(context)
+                .setContentTitle(getText(R.string.app_name))
+                .setContentText(getText(R.string.notification_message))
+                .setSmallIcon(R.drawable.app_icon)
+                .setContentIntent(pendingIntent)
+                .build();
+
+        startForeground(ONGOING_NOTIFICATION_ID, notification);
     }
 
     public class UsbBinder extends Binder {
