@@ -92,4 +92,14 @@
         android:onClick="showSettings"
         android:text="@string/action_settings" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_gravity="end"
+        android:text="@string/stop_app"
+        android:onClick="stopServiceAndFinish"/>
+
 </LinearLayout>

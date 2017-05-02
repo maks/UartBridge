@@ -21,4 +21,5 @@
     <string translatable="false" name="port_default">4353</string>
     <string translatable="false" name="usb_speed_default">115200</string>
     <string name="notification_message">Running</string>
+    <string name="stop_app">STOP !</string>
 </resources>
