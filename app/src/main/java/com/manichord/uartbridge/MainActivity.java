@@ -124,6 +124,11 @@ public class MainActivity extends Activity {
         mMonitorEnabled = ((CheckBox)v).isChecked();
     }
 
+    public void stopServiceAndFinish(View v) {
+        stopService(UsbService.getIntent(this));
+        finish();
+    }
+
     private void startService(Class<?> service, ServiceConnection serviceConnection, Bundle extras) {
         if (!UsbService.SERVICE_CONNECTED) {
             Intent startService = new Intent(this, service);
